@@ -9,4 +9,4 @@ cabal install generates an executable that you can copy into a folder containing
 * jpg
 * svg
 
-This executable then reads all these images with diagrams-input and writes them again with and "out-" at the beginning
+Executing the executable then reads all these images with diagrams-input and writes them again as .svg with and "out-" at the beginning using the native svg backend.
