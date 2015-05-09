@@ -1,25 +1,21 @@
 module Main where
 
-import qualified Data.Text as T
 import Control.Monad
-import Diagrams.SVG.ReadSVG
-import Diagrams.Prelude
-import Diagrams.Backend.SVG -- (renderSVG)
-import Diagrams.Backend.SVG.CmdLine
-import Diagrams.TwoD.Image
-import Diagrams.TwoD.Size (dims2D)
-import Filesystem.Path.CurrentOS (encodeString, decodeString, toText)
-import Prelude hiding (FilePath)
-import System.Environment
-import System.Directory
-import System.FilePath
-import Paths_diagramsInputTest
-import Diagrams.Core.Types
-import Diagrams.Core.Compile
 import qualified Data.ByteString.Lazy as BS
 import Data.Char
+import qualified Data.Text as T
+import Diagrams.Backend.SVG
+import Diagrams.Core.Types
+import Diagrams.Core.Compile
+import Diagrams.Prelude
+import Diagrams.SVG.ReadSVG
+import Diagrams.TwoD.Input
+import Diagrams.TwoD.Size (dims2D)
+import Filesystem.Path.CurrentOS (decodeString)
 import Lucid.Svg
-import Debug.Trace
+import Prelude hiding (FilePath)
+import System.Directory
+import System.FilePath
 
 main = do
   resourceFiles <- getDirectoryContents "."
@@ -36,7 +32,7 @@ img im = case im of Left err -> mempty
                     Right i -> image i
 
 -- renderSVG1 :: SVGFloat n => FilePath -> SizeSpec V2 n -> QDiagram SVG V2 n Any -> IO ()
-renderSVG1 outFile spec = renderSVG1' outFile (SVGOptions spec [] (mkPrefix outFile))
+renderSVG1 outFile spec = renderSVG1' outFile (SVGOptions spec Nothing (mkPrefix outFile))
 
 -- renderSVG1' :: SVGFloat n => FilePath -> Options SVG V2 n -> QDiagram SVG V2 n Any -> IO ()
 renderSVG1' outFile opts
