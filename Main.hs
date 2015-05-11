@@ -23,13 +23,13 @@ main = do
                             xs /= ".." && 
                             ( (lastN 4 xs) == ".svg" || (lastN 4 xs) == ".png" || (lastN 4 xs) == ".jpg" )) resourceFiles
   putStr $ show svgs
-  images <- mapM loadImageEmb (map decodeString svgs)
+  images <- mapM loadImageEmbedded svgs
   let files = map ("out-" ++) svgs
   zipWithM_ (\f i -> renderSVG1 f (dims2D 400 400) i) files (map img images)
 
-img :: Either String (DImage SVG Double Embedded) -> Diagram SVG
+img :: Either String (Diagram SVG) -> Diagram SVG
 img im = case im of Left err -> mempty
-                    Right i -> image i
+                    Right i -> i
 
 -- renderSVG1 :: SVGFloat n => FilePath -> SizeSpec V2 n -> QDiagram SVG V2 n Any -> IO ()
 renderSVG1 outFile spec = renderSVG1' outFile (SVGOptions spec Nothing (mkPrefix outFile))
